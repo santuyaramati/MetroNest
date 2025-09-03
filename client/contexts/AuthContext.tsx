@@ -36,35 +36,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check for existing user data in localStorage on app load
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setUser(userData);
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.error('Error parsing saved user data:', error);
-        localStorage.removeItem('user');
-      }
-    }
+    // Ensure no stale session remains
+    try { localStorage.removeItem('user'); } catch {}
   }, []);
 
   const login = (userData: User) => {
     setUser(userData);
     setIsAuthenticated(true);
-    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
-    localStorage.removeItem('user');
+    try { localStorage.removeItem('user'); } catch {}
   };
 
   const updateUser = (userData: User) => {
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const value = {
