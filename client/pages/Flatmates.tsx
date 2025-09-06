@@ -11,6 +11,7 @@ import { MapPin, Search, Filter, User, Briefcase, Phone, Mail, Heart, X, Eye } f
 import { useBookmarks } from "@/contexts/BookmarkContext";
 import type { Flatmate, SearchResponse } from "@shared/types";
 import { Link } from "react-router-dom";
+import { ContactModal } from "@/components/ContactModal";
 
 export default function Flatmates() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -468,10 +469,12 @@ export default function Flatmates() {
 
                   {/* Contact Buttons */}
                   <div className="flex gap-2">
-                    <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90">
-                      <Phone size={16} className="mr-1" />
-                      Contact
-                    </Button>
+                    <ContactModal room={flatmate} type="contact">
+                      <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90">
+                        <Phone size={16} className="mr-1" />
+                        Contact
+                      </Button>
+                    </ContactModal>
                     <Link to={`/flatmates/${flatmate.id}`} className="flex-1">
                       <Button size="sm" variant="outline" className="w-full">
                         <Eye size={16} className="mr-1" />
